@@ -29,10 +29,6 @@
 		"like": {
 			"description": "Like track",
 			"suggested_key": "Alt+Shift+L"
-		},
-		"unlike": {
-			"description": "Unlike track",
-			"suggested_key": "Alt+Shift+U"
 		}
 	},
 
