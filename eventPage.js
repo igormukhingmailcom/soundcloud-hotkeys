@@ -1,28 +1,30 @@
 chrome.commands.onCommand.addListener(function(command) {
   chrome.tabs.query({url: 'https://soundcloud.com/*'}, function(tabs) {
-    var script = '';
+    var selector = '';
 
     for (let tab of tabs) {
-
       if (tab.url.startsWith('https://soundcloud.com')) {
-
         switch (command) {
           case 'play-pause':
-            script = 'document.querySelector(".playControls__play").click()';
+            selector = '.playControls__play';
             break;
-          case 'next': 
-            script = 'document.querySelector(".skipControl__next").click()';
+          case 'next':
+            selector = '.skipControl__next';
             break;
           case 'previous':
-            script = 'document.querySelector(".skipControl__previous").click()';
+            selector = '.skipControl__previous';
             break;
-          case 'like-unlike':
-            script = 'document.querySelector(".playbackSoundBadge__like").click()';
+          case 'like':
+            selector = '.playbackSoundBadge__like[aria-label=Like]';
+            break;
+          case 'unlike':
+            selector = '.playbackSoundBadge__like[aria-label=Unlike]';
             break;
         }
       }
 
-      if (script.length) {
+      if (selector.length) {
+        var script = "document.querySelectorAll('" + selector + "').forEach(function(item){item.click()})";
         chrome.tabs.executeScript(tab.id, {code: script});
         break;
       }
